@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Bomb_Defuser</string>
+    <string name="rules">
+        -The main goal is to deactivating the bomb by locating each wire of the bomb so that you can crack the pin code before the time runs out.\n\n
+        -The first click will never be a wire.\n\n
+        -It will clear the map and place numbers on the grid.\n\n
+        -The number inside the panel reflect the number of wires that are surrounding the square.\n\n
+        -There will be colored panels that will appear around the board as you further disarm the bomb.\n\n
+        -These panels will contain a random number that you are to used as the pin code that you will input to fully disarm the bomb.
+    </string>
+</resources>
