@@ -16,21 +16,21 @@ public class Grid extends GridView {
 
         GameEngine.getInstance().createGrid(context);
 
-        setNumColumns(GameEngine.WIDTH);
+        setNumColumns(GameEngine.getInstance().getWIDTH());
         setAdapter(new GridAdapter());
 
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     private class GridAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return GameEngine.getInstance().WIDTH * GameEngine.getInstance().HEIGHT;
+            return (GameEngine.getInstance().getWIDTH() * GameEngine.getInstance().getHEIGHT());
         }
 
         @Override

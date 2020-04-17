@@ -3,7 +3,6 @@ package com.example.bomb_defuser.views.grid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -11,14 +10,15 @@ import androidx.core.content.ContextCompat;
 import com.example.bomb_defuser.GameEngine;
 import com.example.bomb_defuser.R;
 
-public class Cell extends BaseCell implements View.OnClickListener{
+public class Cell extends BaseCell implements View.OnClickListener , View.OnLongClickListener{
 
-    public Cell(Context context, int position){
+    public Cell( Context context , int x , int y ){
         super(context);
 
-        setPosition(position);
+        setPosition(x,y);
 
         setOnClickListener(this);
+        setOnLongClickListener(this);
     }
 
     @Override
@@ -32,86 +32,92 @@ public class Cell extends BaseCell implements View.OnClickListener{
     }
 
     @Override
+    public boolean onLongClick(View v) {
+        GameEngine.getInstance().defuse( getXPos() , getYPos() );
+
+        return true;
+    }
+
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawPanel(canvas);
 
-        Log.d("Minesweeper", "Cell::onDraw");
-
-        drawButton(canvas);
-
-        if( isFlagged() ){
-            drawFlag(canvas);
-        }else if( isRevealed() && isBomb() && !isClicked() ){
-            drawNormalBomb(canvas);
-        }else{
+        if( isDefuse() ){
+            drawDefuse(canvas);
+        }else if( isRevealed() && isWire() && !isClicked() ){
+            drawWire(canvas);
+        }else {
             if( isClicked() ){
-                if ( getValue() == -1 ){
-                    drawBombExploded(canvas);
+                if( getValue() == -1 ){
+                    drawWireExploded(canvas);
                 }else {
                     drawNumber(canvas);
                 }
-            }else {
-                drawButton(canvas);
+            }else{
+                drawPanel(canvas);
             }
         }
     }
 
-    private void drawBombExploded(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_bombexploded);
+    private void drawWireExploded(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.wires_explosion);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
-    private void drawFlag(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_flag);
+    private void drawDefuse(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.defuse);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
-    private void drawButton(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_hidden);
+    private void drawPanel(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.panel);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
-    private void drawNormalBomb(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_bomb);
+    private void drawWire(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.wires);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
-    private void drawNumber(Canvas canvas){
+    private void drawNumber( Canvas canvas ){
         Drawable drawable = null;
 
-        switch (getValue()){
+        switch (getValue() ){
             case 0:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_0);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.empty);
                 break;
             case 1:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_1);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_1);
                 break;
             case 2:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_2);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_2);
                 break;
             case 3:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_3);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_3);
                 break;
             case 4:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_4);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_4);
                 break;
             case 5:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_5);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_5);
                 break;
             case 6:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_6);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_6);
                 break;
             case 7:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_7);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_7);
                 break;
             case 8:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.minesweepertile_8);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_8);
                 break;
         }
+
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }

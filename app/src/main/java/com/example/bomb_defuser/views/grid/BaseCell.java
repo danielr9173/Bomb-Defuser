@@ -7,18 +7,16 @@ import com.example.bomb_defuser.GameEngine;
 
 public abstract class BaseCell extends View {
 
-
-
     private int value;
-    private boolean isBomb;
+    private boolean isWire;
     private boolean isRevealed;
     private boolean isClicked;
-    private boolean isFlagged;
+    private boolean isDefuse;
 
-    private int x, y;
+    private int x , y;
     private int position;
 
-    public BaseCell(Context context){
+    public BaseCell(Context context ){
         super(context);
     }
 
@@ -27,32 +25,33 @@ public abstract class BaseCell extends View {
     }
 
     public void setValue(int value) {
-        isBomb = false;
+        isWire = false;
         isRevealed = false;
         isClicked = false;
-        isFlagged = false;
+        isDefuse = false;
 
-        if(value == -1){
-            isBomb = true;
+        if( value == -1 ){
+            isWire = true;
         }
 
         this.value = value;
     }
 
-    public boolean isBomb() {
-        return isBomb;
+    public boolean isWire() {
+        return isWire;
     }
 
-    public void setBomb(boolean bomb) {
-        isBomb = bomb;
+    public void setWire(boolean wire) {
+        isWire = wire;
     }
 
     public boolean isRevealed() {
         return isRevealed;
     }
 
-    public void setRevealed(boolean revealed) {
-        isRevealed = revealed;
+    public void setRevealed() {
+        isRevealed = true;
+        invalidate();
     }
 
     public boolean isClicked() {
@@ -66,35 +65,33 @@ public abstract class BaseCell extends View {
         invalidate();
     }
 
-    public boolean isFlagged() {
-        return isFlagged;
+    public boolean isDefuse() {
+        return isDefuse;
     }
 
-    public void setFlagged(boolean flagged) {
-        isFlagged = flagged;
+    public void setDefuse(boolean defuse) {
+        isDefuse = defuse;
     }
 
     public int getXPos() {
         return x;
     }
 
-
     public int getYPos() {
         return y;
     }
-
 
     public int getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition( int x , int y ){
+        this.x = x;
+        this.y = y;
 
-        this.position = position;
-
-        x = position % GameEngine.WIDTH;
-        y = position / GameEngine.HEIGHT;
+        this.position = y * GameEngine.getInstance().getWIDTH() + x;
 
         invalidate();
     }
 }
+

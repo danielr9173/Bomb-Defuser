@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:entries="@array/difficulty_entries"
+        android:entryValues="@array/difficulty_values"
+        android:key="pref_difficulty"
+        android:title="@string/Game_Difficulty"
+        android:summary="@string/Game_Difficulty_descript"
+        android:persistent="true"
+        android:defaultValue="@string/settings_default_value" />
+
+    <ListPreference
+        android:entries="@array/Amount_of_Wires_entries"
+        android:entryValues="@array/Amount_of_Wires_values"
+        android:key="pref_wires"
+        android:title="@string/Amount_wires"
+        android:summary="@string/Amount_wires_descript"
+        android:persistent="true"
+        android:defaultValue="@string/settings_default_value" />
+
+</PreferenceScreen>

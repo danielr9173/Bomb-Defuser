@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bomb_Defuser</string>
+    <string name="app_name">Bomb Defuser</string>
     <string name="rules">
         -The main goal is to deactivating the bomb by locating each wire of the bomb so that you can crack the pin code before the time runs out.\n\n
         -The first click will never be a wire.\n\n
@@ -8,4 +8,16 @@
         -There will be colored panels that will appear around the board as you further disarm the bomb.\n\n
         -These panels will contain a random number that you are to used as the pin code that you will input to fully disarm the bomb.
     </string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="Game_Difficulty">Game Difficulty</string>
+    <string name="Game_Difficulty_descript">Game Mode Difficulty</string>
+    <string name="Amount_wires">Amount of Wires</string>
+    <string name="Amount_wires_descript">Amount of Wires to defuse the bomb</string>
+    <string name="settings_default_value">2</string>
+
+    <string name="Score">Score:%1$d</string>
+    <string name="Wires_Left">Wires:%1$d</string>
+    <string name="Timer">%02d:%02d</string>
+
 </resources>
