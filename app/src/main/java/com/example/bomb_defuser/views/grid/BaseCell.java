@@ -12,6 +12,7 @@ public abstract class BaseCell extends View {
     private boolean isRevealed;
     private boolean isClicked;
     private boolean isDefuse;
+    private boolean isCode;
 
     private int x , y;
     private int position;

@@ -129,13 +129,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (temp2) {
             case 1:
-                GameEngine.getInstance().setWIRE_NUMBER(15);
+                GameEngine.getInstance().setWIRE_NUMBER(8);
                 break;
             case 2:
-                GameEngine.getInstance().setWIRE_NUMBER(25);
+                GameEngine.getInstance().setWIRE_NUMBER(20);
                 break;
             case 3:
-                GameEngine.getInstance().setWIRE_NUMBER(35);
+                GameEngine.getInstance().setWIRE_NUMBER(32);
                 break;
         }
     }

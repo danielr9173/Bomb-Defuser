@@ -6,11 +6,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.bomb_defuser.util.Generator;
 import com.example.bomb_defuser.views.grid.Cell;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class GameEngine {
     private static GameEngine instance;
@@ -19,9 +25,11 @@ public class GameEngine {
     private int WIDTH;
     private int HEIGHT;
 
-    private boolean startTimer = true;
-    private int scoreCounter = 0;
-    private int wireCounter;  // Really buggy when used!
+    private boolean startTimer;
+    private int scoreCount;
+    private int wireCount;
+    private ArrayList<Integer> pinCode;
+    private int pinCount;
 
     private Context context;
 
@@ -44,6 +52,15 @@ public class GameEngine {
     public void setHEIGHT(int HEIGHT) {
         this.HEIGHT = HEIGHT;
     }
+    public void setScoreCount(int scoreCount) {
+        this.scoreCount = scoreCount;
+    }
+    public void setWireCount(int wireCount) {
+        this.wireCount = wireCount;
+    }
+    public void setPinCount(int pinCount) {
+        this.pinCount = pinCount;
+    }
     public int getWIRE_NUMBER() {
         return WIRE_NUMBER;
     }
@@ -56,12 +73,19 @@ public class GameEngine {
     public boolean getStartTimer() {
         return startTimer;
     }
-    public int getScoreCounter() {
-        return scoreCounter;
+    public int getScoreCount() {
+        return scoreCount;
     }
-    public int getWireCounter() {
-        return wireCounter;
+    public int getWireCount() {
+        return wireCount;
     }
+    public int getPinCode(int i) {
+        return pinCode.get(i);
+    }
+    public int getPinCount() {
+        return pinCount;
+    }
+
 
     public GameEngine(){
     }
@@ -70,8 +94,17 @@ public class GameEngine {
         Log.e("GameEngine", ""+WIDTH+HEIGHT+WIRE_NUMBER); //For testing!
         this.context = context;
         startTimer = true;
-        scoreCounter = 0;
-        wireCounter = WIRE_NUMBER;
+        scoreCount = 0;
+        wireCount = WIRE_NUMBER;
+
+        pinCode = new ArrayList<>(4);
+        pinCount = 3;
+        Random random = new Random();
+        while (pinCode.size() < 4){
+            int ranTemp = 10 + random.nextInt(9-1)+1; //Generate the pin code
+            if(!pinCode.contains(ranTemp))
+                pinCode.add(ranTemp);       //check for duplicates
+        }
 
         BombDefuserGrid = new Cell[WIDTH][HEIGHT];
         // create the grid and store it
@@ -100,14 +133,13 @@ public class GameEngine {
         return BombDefuserGrid[x][y];
     }
 
-    private Cell getCellAt(int x, int y){
+    public Cell getCellAt(int x, int y){
         return BombDefuserGrid[x][y];
     }
 
     public void click( int x , int y ){
         if( x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT && !getCellAt(x,y).isClicked() ){
             getCellAt(x,y).setClicked();
-            scoreCounter++;
 
             if( getCellAt(x,y).getValue() == 0 ){       //if empty display all numbers around that
                 for( int xt = -1 ; xt <= 1 ; xt++ ){    //panel.
@@ -143,29 +175,8 @@ public class GameEngine {
             }
         }
 
-        if( wiresNotFound == 0 && notRevealed == 0 ){
-            startTimer = false;
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("You Won!!!")
-                    .setMessage("The bomb has been defused! Do you want to play again?")
-                    // "Reset Quiz" Button
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(context, GameActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);        //This clears the intent
-                            context.startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);        //This clears the intent
-                            context.startActivity(intent);
-                        }
-                    });
-            builder.create().show();
+        if( wiresNotFound == 0 && notRevealed == 0 ){ //Notify them to input the pin code
+            Toast.makeText(context,"!! Hurry input the pin code !!",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -175,7 +186,13 @@ public class GameEngine {
         getCellAt(x,y).invalidate();
     }
 
-    private void onGameLost(){
+    public void onGameLost(){
+        for ( int x = 0 ; x < WIDTH ; x++ ) {
+            for (int y = 0; y < HEIGHT; y++) {
+                getCellAt(x,y).setRevealed();
+            }
+        }
+
         // handle lost game
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("BOOM!!!")
@@ -198,11 +215,5 @@ public class GameEngine {
                     }
                 });
         builder.create().show();
-
-        for ( int x = 0 ; x < WIDTH ; x++ ) {
-            for (int y = 0; y < HEIGHT; y++) {
-                getCellAt(x,y).setRevealed();
-            }
-        }
     }
 }

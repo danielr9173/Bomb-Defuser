@@ -12,9 +12,9 @@
     </string-array>
 
     <string-array name="Amount_of_Wires_entries">
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
+        <item>A little</item>
+        <item>Average</item>
+        <item>A lot!</item>
     </string-array>
     <string-array name="Amount_of_Wires_values">
         <item>1</item>
