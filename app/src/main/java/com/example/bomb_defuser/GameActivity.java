@@ -1,3 +1,11 @@
+/**
+ * <h1> GameActivity </h1>
+ * This is the class for the Activity_Game and has all the user
+ * interactions that is on this activity.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 4/1/2020
+ */
+
 package com.example.bomb_defuser;
 
 import android.app.AlertDialog;
@@ -23,8 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
 
-    private static final long START_TIMER = 300250; //this is milliseconds for 5 mins.
-
     private TextView txtTimer,txtWires,txtMoves,txtPincode1,txtPincode2,txtPincode3,txtPincode4;
     private CountDownTimer countDownTimer;
     private GridView grid;
@@ -37,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Initialize all the Views
         txtTimer = findViewById(R.id.txtTimer);
         txtWires = findViewById(R.id.txtWiresLeft);
         txtMoves = findViewById(R.id.txtActionTaken);
@@ -50,11 +57,11 @@ public class GameActivity extends AppCompatActivity {
         buttonPressed = 0;
 
         Log.e("GameActivity", "onCreate"); //For testing to see if its working
-        GameEngine.getInstance().createGrid(this);
+        GameEngine.getInstance().createGrid(this); //create the grid of the board
 
 
-        timeLeft = START_TIMER;
-        startCountDown();
+        timeLeft = GameEngine.getInstance().getGameTime(); //Set the game timer
+        startCountDown(); //Start the count down
     }
 
     @Override
@@ -66,13 +73,13 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(GameEngine.getInstance().getWireCount() == 0) {
+        if(GameEngine.getInstance().getWireCount() == 0) {      //Check if the wires have been all defused
             if (grid.getVisibility() == View.VISIBLE) {
-                grid.setVisibility(View.GONE);
+                grid.setVisibility(View.GONE);                  //Display the pin code board
                 pincode.setVisibility(View.VISIBLE);
                 Toast.makeText(this,"!! Press the button again to go back !!",Toast.LENGTH_LONG).show();
             } else if (pincode.getVisibility() == View.VISIBLE) {
-                pincode.setVisibility(View.GONE);
+                pincode.setVisibility(View.GONE);               //Display the game board
                 grid.setVisibility(View.VISIBLE);
                 Toast.makeText(this,"!! Press the button again to go back !!",Toast.LENGTH_LONG).show();
             }
@@ -81,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // This is for the in game timer //
     private void startCountDown() {
         countDownTimer = new CountDownTimer(timeLeft, 1000) {
             @Override
@@ -89,16 +97,16 @@ public class GameActivity extends AppCompatActivity {
                     timeLeft = millisUntilFinished;
                     updateTimer();
                     txtWires.setText(getString(R.string.Wires_Left,         //update both Wires, and
-                            GameEngine.getInstance().getWireCount()));    //Wire and Score text views
+                            GameEngine.getInstance().getWireCount()));    // update the Wire and Score text views
                     txtMoves.setText(getString(R.string.Score,
                             GameEngine.getInstance().getScoreCount()));
                 }
                 else
-                    countDownTimer.cancel();
+                    countDownTimer.cancel(); //If the game has ended stop timer
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish() {   //If the timer ran out then the game is loss
                 timeLeft = 0;
                 updateTimer();
                 GameEngine.getInstance().onGameLost();
@@ -106,6 +114,7 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
+    // Covert the milliseconds to minutes and seconds
     private void updateTimer() {
         int mins = (int) (timeLeft / 1000) / 60;
         int sec = (int) (timeLeft / 1000) % 60;
@@ -119,6 +128,7 @@ public class GameActivity extends AppCompatActivity {
             countDownTimer.cancel();
     }
 
+    // This is used to input the pin code to the bomb
     public void num_Onclick(View v) {
         Button b = findViewById(v.getId());
         if(buttonPressed < 4) {
@@ -140,6 +150,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    // This is the power button that is the big red button. This checks if the pin code is correct or not
     public void power_Onclick(View v){
         int count = 0;
         for(int i=0;i<4;i++){
@@ -178,13 +189,15 @@ public class GameActivity extends AppCompatActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);        //This clears the intent
                             startActivity(intent);
                         }
-                    });
+                    })
+                    .setCancelable(false);
             builder.create().show();
         }
         else    //Notify that its the wrong code
             Toast.makeText(this,"Pincode Denied! Try Again",Toast.LENGTH_LONG).show();
     }
 
+    // Clear the pin code on the board
     public void clr_Onclick(View v) {
         txtPincode1.setText("0");
         txtPincode2.setText("0");

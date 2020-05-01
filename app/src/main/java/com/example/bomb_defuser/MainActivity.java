@@ -1,3 +1,11 @@
+/**
+ * <h1> MainActivity </h1>
+ * This is the class for the Activity_Main and has all the user
+ * interactions that is on this activity.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 3/3/2020
+ */
+
 package com.example.bomb_defuser;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize all the Preferences
         PreferenceManager.setDefaultValues(this,R.xml.root_preferences,false);
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(preferenceChangeListener);
 
+        // Initialize all the Buttons
         btnStart = findViewById(R.id.btnStart);
         btnSet = findViewById(R.id.btnSet);
         btnRules = findViewById(R.id.btnRules);
@@ -99,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    /**
+     * This will update the User Preference in the game.
+     * @param sharedPreferences
+     */
     public void updatePref(SharedPreferences sharedPreferences) {
         String dif = sharedPreferences.getString("pref_difficulty", null);
         String wires = sharedPreferences.getString("pref_wires", null);
@@ -115,21 +129,24 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 GameEngine.getInstance().setWIDTH(9);
                 GameEngine.getInstance().setHEIGHT(13);
+                GameEngine.getInstance().setGameTime(210200); //This is in milliseconds
                 break;
             case 2:
                 GameEngine.getInstance().setWIDTH(12);
                 GameEngine.getInstance().setHEIGHT(18);
+                GameEngine.getInstance().setGameTime(240200);
                 break;
             case 3:
                 GameEngine.getInstance().setWIDTH(14);
                 GameEngine.getInstance().setHEIGHT(21);
+                GameEngine.getInstance().setGameTime(300200);
                 break;
         }
 
 
         switch (temp2) {
             case 1:
-                GameEngine.getInstance().setWIRE_NUMBER(8);
+                GameEngine.getInstance().setWIRE_NUMBER(10);
                 break;
             case 2:
                 GameEngine.getInstance().setWIRE_NUMBER(20);

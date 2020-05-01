@@ -1,3 +1,11 @@
+/**
+ * <h1> GameEngine </h1>
+ * This is the class is the entire heart/engine to the game, it is used to create and manipulate
+ * the game board as you play.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 4/1/2020
+ */
+
 package com.example.bomb_defuser;
 
 import android.app.AlertDialog;
@@ -26,6 +34,8 @@ public class GameEngine {
     private int HEIGHT;
 
     private boolean startTimer;
+    private long gameTime;
+
     private int scoreCount;
     private int wireCount;
     private ArrayList<Integer> pinCode;
@@ -52,6 +62,9 @@ public class GameEngine {
     public void setHEIGHT(int HEIGHT) {
         this.HEIGHT = HEIGHT;
     }
+    public void setGameTime(long gameTime) {
+        this.gameTime = gameTime;
+    }
     public void setScoreCount(int scoreCount) {
         this.scoreCount = scoreCount;
     }
@@ -73,6 +86,9 @@ public class GameEngine {
     public boolean getStartTimer() {
         return startTimer;
     }
+    public long getGameTime() {
+        return gameTime;
+    }
     public int getScoreCount() {
         return scoreCount;
     }
@@ -90,6 +106,7 @@ public class GameEngine {
     public GameEngine(){
     }
 
+    // This is for when the game board is being created //
     public void createGrid(Context context){
         Log.e("GameEngine", ""+WIDTH+HEIGHT+WIRE_NUMBER); //For testing!
         this.context = context;
@@ -112,6 +129,7 @@ public class GameEngine {
         setGrid(context,GeneratedGrid);
     }
 
+    // Sets the game board //
     private void setGrid( final Context context, final int[][] grid ){
         for( int x = 0 ; x < WIDTH ; x++ ){
             for( int y = 0 ; y < HEIGHT ; y++ ){
@@ -124,8 +142,7 @@ public class GameEngine {
         }
     }
 
-
-
+    // This gets the cell attributes at that position //
     public Cell getCellAt(int position) {
         int x = position % WIDTH;
         int y = position / WIDTH;
@@ -133,10 +150,12 @@ public class GameEngine {
         return BombDefuserGrid[x][y];
     }
 
+    // This gets the cell attributes at that coordinates //
     public Cell getCellAt(int x, int y){
         return BombDefuserGrid[x][y];
     }
 
+    // When a cell is clicked //
     public void click( int x , int y ){
         if( x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT && !getCellAt(x,y).isClicked() ){
             getCellAt(x,y).setClicked();
@@ -158,8 +177,7 @@ public class GameEngine {
         checkEnd();
     }
 
-
-
+    // Check if the game has ended //
     private void checkEnd(){
         int wiresNotFound = WIRE_NUMBER;
         int notRevealed = WIDTH * HEIGHT;
@@ -180,12 +198,14 @@ public class GameEngine {
         }
     }
 
+    // sets the panel to be deufed //
     public void defuse(int x , int y ){
         boolean isDefused = getCellAt(x,y).isDefuse();
         getCellAt(x,y).setDefuse(!isDefused);
         getCellAt(x,y).invalidate();
     }
 
+    // When the player has lost the game //
     public void onGameLost(){
         for ( int x = 0 ; x < WIDTH ; x++ ) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -213,7 +233,8 @@ public class GameEngine {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);        //This clears the intent
                         context.startActivity(intent);
                     }
-                });
+                })
+                .setCancelable(false); // Can never cancel the dialog
         builder.create().show();
     }
 }

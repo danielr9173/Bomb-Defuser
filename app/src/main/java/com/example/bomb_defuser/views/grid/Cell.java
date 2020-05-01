@@ -1,3 +1,12 @@
+/**
+ * <h1> Cell </h1>
+ * This class is used as view for each cell on the board. This class
+ * implements the onClickListener and the onLongClickListener for the
+ * reason that each cell need to be interacted with.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 4/1/2020
+ */
+
 package com.example.bomb_defuser.views.grid;
 
 import android.content.Context;
@@ -27,25 +36,30 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec);                    //Since each cell is a square that is why width is used twice.
     }
 
     @Override
     public void onClick(View v) {
-        GameEngine.getInstance().click( getXPos(), getYPos() );
-        GameEngine.getInstance().setScoreCount(GameEngine.getInstance().getScoreCount()+1); //Add one to the score counter
+        if(!GameEngine.getInstance().getCellAt( getXPos() , getYPos()).isRevealed()) {
+            GameEngine.getInstance().click(getXPos(), getYPos());
+            GameEngine.getInstance().setScoreCount(GameEngine.getInstance().getScoreCount() + 1); //Add one to the score counter
+        }
     }
 
     @Override
     public boolean onLongClick(View v) {
-        GameEngine.getInstance().defuse( getXPos() , getYPos() );
-        if( GameEngine.getInstance().getCellAt(getXPos(), getYPos()).isDefuse() && GameEngine.getInstance().getCellAt(getXPos(), getYPos()).isWire()){
-            GameEngine.getInstance().setWireCount(GameEngine.getInstance().getWireCount()-1); //subtract 1 from the wire counter
+        if(!GameEngine.getInstance().getCellAt( getXPos() , getYPos()).isRevealed()) {
+            GameEngine.getInstance().defuse(getXPos(), getYPos());
+            if (GameEngine.getInstance().getCellAt(getXPos(), getYPos()).isDefuse() && GameEngine.getInstance().getCellAt(getXPos(), getYPos()).isWire()) {
+                GameEngine.getInstance().setWireCount(GameEngine.getInstance().getWireCount() - 1); //subtract 1 from the wire counter
+            }
+            GameEngine.getInstance().setScoreCount(GameEngine.getInstance().getScoreCount() + 1); //Add one to the score counter
         }
-        GameEngine.getInstance().setScoreCount(GameEngine.getInstance().getScoreCount()+1); //Add one to the score counter
         return true;
     }
 
+    // Display each cell on the board //
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -74,30 +88,35 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
         }
     }
 
+    // Display each wire that is exploded on the board //
     private void drawWireExploded(Canvas canvas ){
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.wires_explosion);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
+    // Display each defuse on the board //
     private void drawDefuse(Canvas canvas ){
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.defuse);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
+    // Display each panel on the board //
     private void drawPanel(Canvas canvas ){
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.panel);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
+    // Display each Wire on the board //
     private void drawWire(Canvas canvas ){
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.wires);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
+    // Display each Number/EmptyCell on the board //
     private void drawNumber( Canvas canvas ){
         Drawable drawable = null;
 
@@ -135,6 +154,8 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
         drawable.draw(canvas);
     }
 
+    // Display each PinCode number on the board //
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void drawPin(Canvas canvas ){
         Drawable drawable = null;
@@ -169,6 +190,7 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
                 break;
         }
 
+        // This will color each Pincode number on the board //
         if(getValue() == GameEngine.getInstance().getPinCode(3)){
             drawable.mutate().setTint(getResources().getColor(R.color.green));
         }else if(getValue() == GameEngine.getInstance().getPinCode(2)){

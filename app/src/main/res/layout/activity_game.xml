@@ -255,8 +255,8 @@
 
         <ImageButton
             android:id="@+id/ibPower"
-            android:layout_width="225dp"
-            android:layout_height="225dp"
+            android:layout_width="182dp"
+            android:layout_height="158dp"
             android:background="@color/RulesBackground"
             android:onClick="power_Onclick"
             android:scaleType="centerInside"

@@ -1,3 +1,12 @@
+/**
+ * <h1> BaseCell </h1>
+ * This abstract class is used to show each attribute that each cell on the playing board
+ * has. For example, if that cell is a wire then the isWire boolean is set to true, or if it
+ * is a value then set the value of that cell.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 4/1/2020
+ */
+
 package com.example.bomb_defuser.views.grid;
 
 import android.content.Context;

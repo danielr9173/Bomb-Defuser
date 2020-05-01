@@ -12,7 +12,7 @@
 
     <string name="title_activity_settings">Settings</string>
     <string name="Game_Difficulty">Game Difficulty</string>
-    <string name="Game_Difficulty_descript">Game Mode Difficulty</string>
+    <string name="Game_Difficulty_descript">This will affect the size of the board, and the amount of time you have to defuse the bomb</string>
     <string name="Amount_wires">Amount of Wires</string>
     <string name="Amount_wires_descript">Amount of Wires to defuse the bomb</string>
     <string name="settings_default_value">2</string>

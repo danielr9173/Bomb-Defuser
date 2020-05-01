@@ -11,60 +11,60 @@
 
     <TextView
         android:id="@+id/TitleView"
-        android:layout_width="318dp"
-        android:layout_height="95dp"
+        android:layout_width="115dp"
+        android:layout_height="32dp"
         android:layout_gravity="center"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/title_background"
         android:gravity="center"
         android:text="Bomb Defuser!"
         android:textColor="#000000"
-        android:textSize="38sp"
+        android:textSize="14sp"
         app:fontFamily="@font/faster_one" />
 
     <Button
         android:id="@+id/btnStart"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="80dp"
+        android:layout_height="16dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="Start"
         android:textColor="#000000"
-        android:textSize="30sp" />
+        android:textSize="8sp" />
 
     <Button
         android:id="@+id/btnRules"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="80dp"
+        android:layout_height="16dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="How To Play"
         android:textColor="#000000"
-        android:textSize="26sp" />
+        android:textSize="8sp" />
 
     <Button
         android:id="@+id/btnSet"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="80dp"
+        android:layout_height="16dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="Settings"
         android:textColor="#000000"
-        android:textSize="28sp" />
+        android:textSize="8sp" />
 
     <Button
         android:id="@+id/btnCreatedBy"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="80dp"
+        android:layout_height="16dp"
         android:layout_gravity="center"
         android:background="@drawable/button_background"
         android:text="Created By"
         android:textColor="#000000"
-        android:textSize="28sp" />
+        android:textSize="8sp" />
 
 </LinearLayout>

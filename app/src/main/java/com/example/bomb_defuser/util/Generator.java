@@ -1,3 +1,11 @@
+/**
+ * <h1> Generator </h1>
+ * This class is used to generate the playing board that has all the
+ * wires and numbers on the board.
+ * Created by: Daniel Ramirez, Robert Sosa
+ * Date: 4/1/2020
+ */
+
 package com.example.bomb_defuser.util;
 
 import com.example.bomb_defuser.GameEngine;
