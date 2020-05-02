@@ -2,12 +2,14 @@
     <string name="app_name">Bomb Defuser</string>
     <string name="rules">
         -The main goal is to deactivating the bomb by locating each wire of the bomb so that you can crack the pin code before the time runs out.\n\n
-        -To correctly defuse a wire by long pressing the panel.\n\n
-        -The first click will never be a wire.\n\n
-        -It will clear the map and place numbers on the grid.\n\n
+        -To correctly defuse a wire you will press and hold the panel until you see a defuse image appear.\n\n
+        -The board will clear when a empty tile is pressed and numbers will be displayed accordingly on the grid.\n\n
         -The number inside the panel reflect the number of wires that are surrounding the square.\n\n
-        -There will be colored panels that will appear around the board as you further disarm the bomb.\n\n
-        -These panels will contain a random number that you are to used as the pin code that you will input to fully disarm the bomb.
+        -There will be colored number panels that will appear around the board as you further disarm the bomb.\n\n
+        -These panels will contain a random number that you are to used as the pin code that you will input to fully disarm the bomb.\n\n
+        -Before trying to input the pin code into the bomb you will have to full disarm all the wires first.\n\n
+        -You can change the difficulty of the game in the settings option in the main menu. The difficulty changes the area of the grid and the time you have.\n\n
+        -Finally, just have fun!
     </string>
 
     <string name="title_activity_settings">Settings</string>
